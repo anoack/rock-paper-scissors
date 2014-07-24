@@ -19,17 +19,18 @@ public class GameControllerTest {
         GameType.COMPUTER_VS_COMPUTER.getPlayerFactory().setAutoChoosingStrategy(fakeAutoChoose);
         GameType.PLAYER_VS_COMPUTER.getPlayerFactory().setAutoChoosingStrategy(fakeAutoChoose);
         controller = new GameController();
+        controller.onInit();
     }
 
     private void playPlayerVsComputer(Choice forAutoChoose) {
         fakeAutoChoose.setChoice(forAutoChoose);
-        controller.onInit(GameType.PLAYER_VS_COMPUTER);
+        controller.onGameTypeChosen(GameType.PLAYER_VS_COMPUTER);
         model = controller.getGameModel();
     }
 
     private void playComputerVsComputer(Choice forAutoChoose) {
         fakeAutoChoose.setChoice(forAutoChoose);
-        controller.onInit(GameType.COMPUTER_VS_COMPUTER);
+        controller.onGameTypeChosen(GameType.COMPUTER_VS_COMPUTER);
         model = controller.getGameModel();
     }
 

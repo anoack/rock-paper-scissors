@@ -10,8 +10,11 @@ public class GameController implements Observer {
 
     private GameModel gameModel;
 
-    public void onInit(GameType gameType) {
+    public void onInit() {
         gameModel = new GameModel();
+    }
+
+    public void onGameTypeChosen(GameType gameType) {
         gameModel.initPlayers(gameType);
         gameModel.addPlayerObserver(this);
         gameModel.startGame();
