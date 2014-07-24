@@ -1,0 +1,33 @@
+package com.andrenoack.rpsgame;
+
+import java.util.HashSet;
+import java.util.Set;
+
+/**
+ * Defines the game rules, i.e. what choice beats another one.
+ */
+public enum Choice {
+    ROCK, PAPER, SCISSORS;
+
+    static {
+        ROCK.beats(SCISSORS);
+        PAPER.beats(ROCK);
+        SCISSORS.beats(PAPER);
+    }
+
+    private Set<Choice> losers;
+
+    private Choice() {
+        losers = new HashSet<>();
+    }
+
+    private void beats(Choice... choices) {
+        for (Choice loser : choices) {
+            this.losers.add(loser);
+        }
+    }
+
+    public boolean isBeating(Choice opponent) {
+        return losers.contains(opponent);
+    }
+}
