@@ -18,4 +18,6 @@ public interface Player {
     public Choice getChoice();
 
     public boolean isChoiceMade();
+
+    public boolean isPlaying();
 }

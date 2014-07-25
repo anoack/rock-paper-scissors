@@ -6,7 +6,7 @@ import java.util.Observer;
 /**
  * This is the controller for handling the game logic.
  */
-public class GameController implements Observer {
+public class GameController {
 
     private GameModel gameModel;
 
@@ -16,28 +16,11 @@ public class GameController implements Observer {
 
     public void onGameTypeChosen(GameType gameType) {
         gameModel.initPlayers(gameType);
-        gameModel.addPlayerObserver(this);
         gameModel.startGame();
     }
 
     public void onPlayerMadeChoice(String playerName, Choice choice) {
         gameModel.setPlayersChoice(playerName, choice);
-    }
-
-    @Override
-    public void update(Observable observable, Object o) {
-        if (getGameModel().isChoicesComplete()) {
-            onChoicesComplete();
-        }
-    }
-
-    private void onChoicesComplete() {
-        gameModel.calculateResult();
-        onFinished();
-    }
-
-    private void onFinished() {
-
     }
 
     public GameModel getGameModel() {

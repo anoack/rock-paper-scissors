@@ -3,17 +3,28 @@ package com.andrenoack.rpsgame;
 import com.andrenoack.rpsgame.players.Player;
 
 import java.util.*;
+import static com.andrenoack.rpsgame.GameState.*;
 
 /**
  * Created by Andre on 24.07.2014.
  */
-public class GameModel {
+public class GameModel extends Observable implements Observer {
 
+    private GameState state;
     private Map<String, Player> players;
     private Result result;
 
     public GameModel() {
         players = new LinkedHashMap<>(2);
+        setState(INITIALIZED);
+    }
+
+    private void setState(GameState state) {
+        if (this.state != state) {
+            setChanged();
+            notifyObservers(state);
+            this.state = state;
+        }
     }
 
     public void initPlayers(GameType gameType) {
@@ -25,23 +36,27 @@ public class GameModel {
         for (Player player : getPlayers()) {
             player.play();
         }
+        if (state == INITIALIZED) {
+            setState(RUNNING);
+        }
     }
 
     private void addPlayer(Player player) {
         players.put(player.getName(), player);
-    }
-
-    public void addPlayerObserver(Observer observer) {
-        for (Player player : getPlayers()) {
-            player.addObserver(observer);
-            player.addObserver(observer);
-        }
+        player.addObserver(this);
     }
 
     public void setPlayersChoice(String playerName, Choice choice) {
         Player player = players.get(playerName);
         if (player != null) {
             player.setChoice(choice);
+        }
+    }
+
+    @Override
+    public void update(Observable observable, Object o) {
+        if (isChoicesComplete()) {
+            calculateResult();
         }
     }
 
@@ -68,6 +83,7 @@ public class GameModel {
                     result = new Result(null);
             }
         }
+        setState(FINISHED);
     }
 
 
@@ -87,6 +103,10 @@ public class GameModel {
 
     public Collection<Player> getPlayers() {
         return players.values();
+    }
+
+    public GameState getState() {
+        return state;
     }
 
 }

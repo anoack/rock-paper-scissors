@@ -39,4 +39,14 @@ public abstract class PlayerDecorator implements Player {
     public Choice getChoice() {
         return decoratedPlayer.getChoice();
     }
+
+    @Override
+    public void play() {
+        decoratedPlayer.play();
+    }
+
+    @Override
+    public boolean isPlaying() {
+        return decoratedPlayer.isPlaying();
+    }
 }

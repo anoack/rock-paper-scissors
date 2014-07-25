@@ -11,6 +11,7 @@ public class GenericPlayer extends Observable implements Player {
 
     private String name;
     private Choice choice;
+    private boolean playing;
 
     public GenericPlayer(String name) {
         this.name = name;
@@ -19,13 +20,14 @@ public class GenericPlayer extends Observable implements Player {
 
     @Override
     public void play() {
-
+        playing = true;
     }
 
     @Override
     public void setChoice(Choice choice) {
         if (!isChoiceMade()) {
             this.choice = choice;
+            this.playing = false;
             setChanged();
             notifyObservers();
         }
@@ -44,5 +46,10 @@ public class GenericPlayer extends Observable implements Player {
     @Override
     public Choice getChoice() {
         return choice;
+    }
+
+    @Override
+    public boolean isPlaying() {
+        return playing;
     }
 }
