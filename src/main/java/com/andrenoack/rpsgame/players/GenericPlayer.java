@@ -5,7 +5,8 @@ import com.andrenoack.rpsgame.Choice;
 import java.util.Observable;
 
 /**
- * Created by Andre on 24.07.2014.
+ * Representation of a Player which can be used "as is" for human players or
+ * decorated with functionality to reflect different player types like Computer players.
  */
 public class GenericPlayer extends Observable implements Player {
 

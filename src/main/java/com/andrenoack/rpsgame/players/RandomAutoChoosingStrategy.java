@@ -5,14 +5,14 @@ import com.andrenoack.rpsgame.Choice;
 import java.util.Random;
 
 /**
- * Created by Andre on 24.07.2014.
+ * A AutoChoosingStrategy that returns random choices.
  */
-public class RandomChoosingStrategy implements ChoosingStrategy {
+public class RandomAutoChoosingStrategy implements AutoChoosingStrategy {
 
     Random random;
     Choice[] allChoices = Choice.values();
 
-    public RandomChoosingStrategy() {
+    public RandomAutoChoosingStrategy() {
         this.random = new Random();
     }
 

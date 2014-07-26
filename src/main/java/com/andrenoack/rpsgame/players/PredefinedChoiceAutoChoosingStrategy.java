@@ -3,9 +3,10 @@ package com.andrenoack.rpsgame.players;
 import com.andrenoack.rpsgame.Choice;
 
 /**
- * This ChoosingStrategy is basically useful in tests. It returns the choice that has been set before.
+ * This ChoosingStrategy is basically useful in tests.
+ * It returns the choice that has been set before.
  */
-public class PredefinedChoiceChoosingStrategy implements ChoosingStrategy {
+public class PredefinedChoiceAutoChoosingStrategy implements AutoChoosingStrategy {
 
     private Choice choice;
 

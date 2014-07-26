@@ -1,21 +1,19 @@
 package com.andrenoack.rpsgame.players;
 
 /**
- * Created by Andre on 24.07.2014.
+ * A PlayerFactory that returns a Computer player as the first Player. Subclasses have to take care about the
+ * creation of the second player.
  */
 public abstract class BasePlayerFactory implements PlayerFactory {
 
-    protected ChoosingStrategy autoChoosingStrategy;
+    protected AutoChoosingStrategy autoChoosingStrategy;
 
     protected BasePlayerFactory() {
-        this.autoChoosingStrategy = new RandomChoosingStrategy();
+        this.autoChoosingStrategy = new RandomAutoChoosingStrategy();
     }
 
-    /**
-     * Overwrite the default ChoosingStrategy.
-     * @param autoChoosingStrategy
-     */
-    public void setAutoChoosingStrategy(ChoosingStrategy autoChoosingStrategy) {
+    @Override
+    public void setAutoChoosingStrategy(AutoChoosingStrategy autoChoosingStrategy) {
         this.autoChoosingStrategy = autoChoosingStrategy;
     }
 

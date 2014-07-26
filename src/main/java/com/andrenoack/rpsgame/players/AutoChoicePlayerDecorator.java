@@ -1,20 +1,24 @@
 package com.andrenoack.rpsgame.players;
 
 /**
- * Created by Andre on 24.07.2014.
+ * Decorates Player instances with functionality to automatically
+ * make a choice by utilizing an AutoChoosingStrategy.
  */
 public class AutoChoicePlayerDecorator extends PlayerDecorator {
 
-    private ChoosingStrategy choosingStrategy;
+    private AutoChoosingStrategy autoChoosingStrategy;
 
-    public AutoChoicePlayerDecorator(Player decoratedPlayer, ChoosingStrategy choosingStrategy) {
+    public AutoChoicePlayerDecorator(Player decoratedPlayer, AutoChoosingStrategy autoChoosingStrategy) {
         super(decoratedPlayer);
-        this.choosingStrategy = choosingStrategy;
+        this.autoChoosingStrategy = autoChoosingStrategy;
     }
 
+    /**
+     * Sets a choice that is retrieved by utilizing the AutoChoosingStrategy.
+     */
     @Override
     public void play() {
-        super.setChoice(choosingStrategy.choose());
+        super.setChoice(autoChoosingStrategy.choose());
     }
 
 }

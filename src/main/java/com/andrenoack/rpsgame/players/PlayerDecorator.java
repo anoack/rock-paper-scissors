@@ -5,7 +5,8 @@ import com.andrenoack.rpsgame.Choice;
 import java.util.Observer;
 
 /**
- * Created by Andre on 24.07.2014.
+ * An abstract Decorator that delegates all methods to the decorated Player.
+ * Use this class as a base class when creating concrete PlayerDecorators.
  */
 public abstract class PlayerDecorator implements Player {
 

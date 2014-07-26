@@ -1,7 +1,7 @@
 package com.andrenoack.rpsgame.players;
 
 /**
- * Created by Andre on 24.07.2014.
+ * This PlayerFactory creates a Computer Player and a regular Player.
  */
 public class PlayerVsComputerPlayerFactory extends BasePlayerFactory {
 
