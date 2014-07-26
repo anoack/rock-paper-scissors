@@ -1,14 +1,17 @@
 package com.andrenoack.rpsgame;
 
-import com.andrenoack.rpsgame.ui.swing.SwingView;
+import com.andrenoack.rpsgame.ui.UI;
+import com.andrenoack.rpsgame.ui.UIFactory;
+import com.andrenoack.rpsgame.ui.swing.SwingUIFactory;
 
 /**
- * Created by Andre on 24.07.2014.
+ * This is the main class for starting the application.
  */
 public class Game {
 
     public static void main(String... args) {
-        Controller controller = new Controller();
-        SwingView swingView = new SwingView(controller);
+        UIFactory uiFactory = new SwingUIFactory();
+        UI ui = uiFactory.createUI();
+        ui.start(new Controller());
     }
 }

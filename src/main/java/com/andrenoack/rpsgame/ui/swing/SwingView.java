@@ -10,7 +10,8 @@ import java.awt.*;
 import java.util.*;
 
 /**
- * Created by Andre on 24.07.2014.
+ * A Swing based GUI view. It observes the Model for changes
+ * and acts accordingly.
  */
 public class SwingView extends JFrame implements Observer {
 
@@ -22,25 +23,28 @@ public class SwingView extends JFrame implements Observer {
         this.controller = controller;
         controller.getModel().addObserver(this);
         setFrameProperties();
+        initScreens();
+    }
+
+    private void setFrameProperties() {
+        this.setTitle("Rock Paper Scissors");
+        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        this.setSize(450, 200);
+    }
+
+    private void initScreens() {
         screenMap = new HashMap<>();
         screens = new JPanel(new CardLayout());
         this.setContentPane(screens);
         addOrReplaceScreen(buildStartScreen(), GameState.INITIALIZED.name());
-        this.setVisible(true);
     }
-    
+
     private void addOrReplaceScreen(Component screen, String name) {
         Component previous = screenMap.put(name, screen);
         if (previous != null) {
             screens.remove(previous);
         }
         screens.add(screen, name);
-    }
-
-    private void setFrameProperties() {
-        this.setTitle("Rock Paper Scissors");
-        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        this.setSize(450, 200);
     }
 
     @Override
@@ -78,7 +82,7 @@ public class SwingView extends JFrame implements Observer {
 
     private JPanel buildChooseScreen() {
         JPanel panel = new JPanel();
-        controller.getModel().getPlayers().stream().filter(player -> player.isPlaying()).forEach(player -> {
+        controller.getModel().getPlayers().stream().filter(Player::isPlaying).forEach(player -> {
             JLabel label = new JLabel("Make your choice: ");
             panel.add(label);
             for (Choice choice : EnumSet.allOf(Choice.class)) {
@@ -95,7 +99,6 @@ public class SwingView extends JFrame implements Observer {
         panel.add(createChoicesView());
         panel.add(createWinnerAnnouncement());
         panel.add(createPlayAgainOptions());
-
         return panel;
     }
 
@@ -108,11 +111,10 @@ public class SwingView extends JFrame implements Observer {
         return panel;
     }
 
-
     private JTable createChoicesTable() {
-        Player[] players = controller.getModel().getPlayers().toArray(new Player[0]);
+        Player[] players = controller.getModel().getPlayers().toArray(new Player[2]);
         String[] columnNames = {"Player", "Choice"};
-        JTable table = new JTable(new AbstractTableModel() {
+        return new JTable(new AbstractTableModel() {
             @Override
             public int getRowCount() {
                 return players.length;
@@ -139,7 +141,6 @@ public class SwingView extends JFrame implements Observer {
                 return false;
             }
         });
-        return table;
     }
 
     private Component createWinnerAnnouncement() {
@@ -153,7 +154,7 @@ public class SwingView extends JFrame implements Observer {
         panel.add(new JLabel("Play again?"));
         JButton yes = addButton(panel, "Sure!");
         yes.addActionListener(e -> controller.onRestart());
-        JButton no = addButton(panel, "Nope");
+        JButton no = addButton(panel, "No, thanks.");
         no.addActionListener(e -> System.exit(0));
         return panel;
     }
