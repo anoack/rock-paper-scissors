@@ -43,7 +43,6 @@ public class Model extends Observable implements Observer {
     /**
      * Creates two opponent players. The type of players is determined by
      * the GameType.
-     * @param gameType
      */
     public void initPlayers(GameType gameType) {
         addPlayer(gameType.getPlayerFactory().createPlayerOne());
@@ -87,7 +86,7 @@ public class Model extends Observable implements Observer {
      * Checks if both Players are finished with making their choice.
      * @return true if both players are finished, false otherwise
      */
-    public boolean isChoicesComplete() {
+    boolean isChoicesComplete() {
         for (Player player : players.values()) {
             if(!player.isChoiceMade()) {
                 return false;
@@ -100,7 +99,7 @@ public class Model extends Observable implements Observer {
      * Compute the result, i.e. which Player wins the game after both Players
      * have made their choice.
      */
-    public void calculateResult() {
+    void calculateResult() {
         if (isChoicesComplete()) {
             Player[] playerArray = getPlayers().toArray(new Player[2]);
             switch (compareChoices(playerArray[0].getChoice(), playerArray[1].getChoice())) {

@@ -4,7 +4,7 @@ import com.andrenoack.rpsgame.Controller;
 import com.andrenoack.rpsgame.ui.UI;
 
 /**
- * Created by Andre on 26.07.2014.
+ * A Swing based UI.
  */
 public class SwingUI implements UI {
 

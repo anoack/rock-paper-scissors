@@ -6,9 +6,9 @@ package com.andrenoack.rpsgame.players;
  */
 public abstract class BasePlayerFactory implements PlayerFactory {
 
-    protected AutoChoosingStrategy autoChoosingStrategy;
+    AutoChoosingStrategy autoChoosingStrategy;
 
-    protected BasePlayerFactory() {
+    BasePlayerFactory() {
         this.autoChoosingStrategy = new RandomAutoChoosingStrategy();
     }
 

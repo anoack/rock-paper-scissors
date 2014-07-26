@@ -13,7 +13,7 @@ import java.util.*;
  * A Swing based GUI view. It observes the Model for changes
  * and acts accordingly.
  */
-public class SwingView extends JFrame implements Observer {
+class SwingView extends JFrame implements Observer {
 
     private Controller controller;
     private JPanel screens;

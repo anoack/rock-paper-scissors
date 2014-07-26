@@ -48,7 +48,7 @@ public class ControllerTest {
     @Test
     public void testNoResultWhenOnlyOnePlayerPlayed() throws Exception {
         playPlayerVsComputer(Choice.SCISSORS);
-        Player[] playerArray = model.getPlayers().toArray(new Player[0]);
+        Player[] playerArray = model.getPlayers().toArray(new Player[2]);
         assertTrue(playerArray[0].isChoiceMade());
         assertFalse(playerArray[1].isChoiceMade());
         assertNull(model.getResult());
@@ -70,7 +70,7 @@ public class ControllerTest {
     public void testPlayerOneWins() throws Exception {
         playPlayerVsComputer(Choice.SCISSORS);
 
-        Player[] playerArray = model.getPlayers().toArray(new Player[0]);
+        Player[] playerArray = model.getPlayers().toArray(new Player[2]);
         controller.onPlayerMadeChoice(playerArray[1], Choice.PAPER);
 
         assertNotNull(model.getResult());
@@ -82,7 +82,7 @@ public class ControllerTest {
     public void testPlayerTwoWins() throws Exception {
         playPlayerVsComputer(Choice.ROCK);
 
-        Player[] playerArray = model.getPlayers().toArray(new Player[0]);
+        Player[] playerArray = model.getPlayers().toArray(new Player[2]);
         controller.onPlayerMadeChoice(playerArray[1], Choice.PAPER);
 
         assertNotNull(model.getResult());
@@ -94,7 +94,7 @@ public class ControllerTest {
     public void testTie() throws Exception {
         playPlayerVsComputer(Choice.SCISSORS);
 
-        Player[] playerArray = model.getPlayers().toArray(new Player[0]);
+        Player[] playerArray = model.getPlayers().toArray(new Player[2]);
         controller.onPlayerMadeChoice(playerArray[1], Choice.SCISSORS);
 
         assertNotNull(model.getResult());

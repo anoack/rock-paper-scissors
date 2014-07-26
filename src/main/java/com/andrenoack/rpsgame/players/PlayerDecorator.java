@@ -12,7 +12,7 @@ public abstract class PlayerDecorator implements Player {
 
     private Player decoratedPlayer;
 
-    public PlayerDecorator(Player decoratedPlayer) {
+    PlayerDecorator(Player decoratedPlayer) {
         this.decoratedPlayer = decoratedPlayer;
     }
 

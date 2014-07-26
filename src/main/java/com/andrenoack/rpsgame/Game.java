@@ -7,7 +7,7 @@ import com.andrenoack.rpsgame.ui.swing.SwingUIFactory;
 /**
  * This is the main class for starting the application.
  */
-public class Game {
+class Game {
 
     public static void main(String... args) {
         UIFactory uiFactory = new SwingUIFactory();
