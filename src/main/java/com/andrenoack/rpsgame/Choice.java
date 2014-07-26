@@ -1,10 +1,12 @@
 package com.andrenoack.rpsgame;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Defines the game rules, i.e. what choice beats another one.
+ * Defines the game rules, i.e. what choices are available
+ * and which choice beats another choice.
  */
 public enum Choice {
     ROCK, PAPER, SCISSORS;
@@ -22,9 +24,7 @@ public enum Choice {
     }
 
     private void beats(Choice... choices) {
-        for (Choice loser : choices) {
-            this.losers.add(loser);
-        }
+        Collections.addAll(this.losers, choices);
     }
 
     public boolean isBeating(Choice opponent) {

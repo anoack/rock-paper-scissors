@@ -1,7 +1,7 @@
 package com.andrenoack.rpsgame;
 
 import com.andrenoack.rpsgame.players.Player;
-import com.andrenoack.rpsgame.players.PredefinedChoiceChoosingStrategy;
+import com.andrenoack.rpsgame.players.PredefinedChoiceAutoChoosingStrategy;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -11,11 +11,11 @@ public class ControllerTest {
 
     private Controller controller;
     private Model model;
-    private PredefinedChoiceChoosingStrategy fakeAutoChoose;
+    private PredefinedChoiceAutoChoosingStrategy fakeAutoChoose;
 
     @Before
     public void setUp() throws Exception {
-        fakeAutoChoose = new PredefinedChoiceChoosingStrategy();
+        fakeAutoChoose = new PredefinedChoiceAutoChoosingStrategy();
         GameType.COMPUTER_VS_COMPUTER.getPlayerFactory().setAutoChoosingStrategy(fakeAutoChoose);
         GameType.PLAYER_VS_COMPUTER.getPlayerFactory().setAutoChoosingStrategy(fakeAutoChoose);
         controller = new Controller();

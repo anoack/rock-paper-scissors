@@ -3,7 +3,7 @@ package com.andrenoack.rpsgame;
 import com.andrenoack.rpsgame.players.Player;
 
 /**
- * Created by Andre on 24.07.2014.
+ * This class represents the result of a game.
  */
 public class Result {
 

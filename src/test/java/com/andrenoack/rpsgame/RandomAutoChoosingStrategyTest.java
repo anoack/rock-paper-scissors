@@ -1,6 +1,6 @@
 package com.andrenoack.rpsgame;
 
-import com.andrenoack.rpsgame.players.RandomChoosingStrategy;
+import com.andrenoack.rpsgame.players.RandomAutoChoosingStrategy;
 import org.junit.Before;
 import org.junit.Test;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -11,13 +11,13 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import static org.junit.Assert.*;
 
-public class RandomChoosingStrategyTest {
+public class RandomAutoChoosingStrategyTest {
 
-    private RandomChoosingStrategy strategy;
+    private RandomAutoChoosingStrategy strategy;
 
     @Before
     public void setUp() throws Exception {
-        strategy = new RandomChoosingStrategy();
+        strategy = new RandomAutoChoosingStrategy();
     }
 
     @Test

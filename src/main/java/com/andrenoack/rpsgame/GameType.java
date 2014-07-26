@@ -3,7 +3,7 @@ package com.andrenoack.rpsgame;
 import com.andrenoack.rpsgame.players.*;
 
 /**
- * Created by Andre on 24.07.2014.
+ * Defines available Game types to play.
  */
 public enum GameType {
     PLAYER_VS_COMPUTER("Player vs. Computer", new PlayerVsComputerPlayerFactory()),

@@ -1,7 +1,7 @@
 package com.andrenoack.rpsgame;
 
 /**
- * Created by Andre on 25.07.2014.
+ * Defines possible game states.
  */
 public enum GameState {
     INITIALIZED, RUNNING, FINISHED;
