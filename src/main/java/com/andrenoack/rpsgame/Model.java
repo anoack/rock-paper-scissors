@@ -8,15 +8,25 @@ import static com.andrenoack.rpsgame.GameState.*;
 /**
  * Created by Andre on 24.07.2014.
  */
-public class GameModel extends Observable implements Observer {
+public class Model extends Observable implements Observer {
 
     private GameState state;
     private Map<String, Player> players;
     private Result result;
 
-    public GameModel() {
+    public Model() {
+        initialize();
+    }
+
+    private void initialize() {
         players = new LinkedHashMap<>(2);
         setState(INITIALIZED);
+    }
+
+    public void reset() {
+        result = null;
+        players = null;
+        initialize();
     }
 
     private void setState(GameState state) {
@@ -46,11 +56,8 @@ public class GameModel extends Observable implements Observer {
         player.addObserver(this);
     }
 
-    public void setPlayersChoice(String playerName, Choice choice) {
-        Player player = players.get(playerName);
-        if (player != null) {
-            player.setChoice(choice);
-        }
+    public void setPlayersChoice(Player player, Choice choice) {
+        player.setChoice(choice);
     }
 
     @Override

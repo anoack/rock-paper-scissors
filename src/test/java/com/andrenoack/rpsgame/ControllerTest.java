@@ -7,10 +7,10 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class GameControllerTest {
+public class ControllerTest {
 
-    private GameController controller;
-    private GameModel model;
+    private Controller controller;
+    private Model model;
     private PredefinedChoiceChoosingStrategy fakeAutoChoose;
 
     @Before
@@ -18,20 +18,20 @@ public class GameControllerTest {
         fakeAutoChoose = new PredefinedChoiceChoosingStrategy();
         GameType.COMPUTER_VS_COMPUTER.getPlayerFactory().setAutoChoosingStrategy(fakeAutoChoose);
         GameType.PLAYER_VS_COMPUTER.getPlayerFactory().setAutoChoosingStrategy(fakeAutoChoose);
-        controller = new GameController();
-        controller.onInit();
+        controller = new Controller();
+        model = controller.getModel();
     }
+
 
     private void playPlayerVsComputer(Choice forAutoChoose) {
         fakeAutoChoose.setChoice(forAutoChoose);
         controller.onGameTypeChosen(GameType.PLAYER_VS_COMPUTER);
-        model = controller.getGameModel();
+
     }
 
     private void playComputerVsComputer(Choice forAutoChoose) {
         fakeAutoChoose.setChoice(forAutoChoose);
         controller.onGameTypeChosen(GameType.COMPUTER_VS_COMPUTER);
-        model = controller.getGameModel();
     }
 
     @Test
@@ -41,9 +41,8 @@ public class GameControllerTest {
     }
 
     @Test
-    public void testNoResultWhenNotPlayed() throws Exception {
-        playPlayerVsComputer(Choice.SCISSORS);
-        assertNull(model.getResult());
+    public void testModelStateInitialized() throws Exception {
+        assertEquals (GameState.INITIALIZED, model.getState());
     }
 
     @Test
@@ -56,11 +55,23 @@ public class GameControllerTest {
     }
 
     @Test
+    public void testModelStateRunning() throws Exception {
+        playPlayerVsComputer(Choice.SCISSORS);
+        assertEquals (GameState.RUNNING, model.getState());
+    }
+
+    @Test
+    public void testModelStateFinished() throws Exception {
+        playComputerVsComputer(Choice.SCISSORS);
+        assertEquals (GameState.FINISHED, model.getState());
+    }
+
+    @Test
     public void testPlayerOneWins() throws Exception {
         playPlayerVsComputer(Choice.SCISSORS);
 
         Player[] playerArray = model.getPlayers().toArray(new Player[0]);
-        controller.onPlayerMadeChoice(playerArray[1].getName(), Choice.PAPER);
+        controller.onPlayerMadeChoice(playerArray[1], Choice.PAPER);
 
         assertNotNull(model.getResult());
         assertFalse(model.getResult().isTie());
@@ -72,7 +83,7 @@ public class GameControllerTest {
         playPlayerVsComputer(Choice.ROCK);
 
         Player[] playerArray = model.getPlayers().toArray(new Player[0]);
-        controller.onPlayerMadeChoice(playerArray[1].getName(), Choice.PAPER);
+        controller.onPlayerMadeChoice(playerArray[1], Choice.PAPER);
 
         assertNotNull(model.getResult());
         assertFalse(model.getResult().isTie());
@@ -84,7 +95,7 @@ public class GameControllerTest {
         playPlayerVsComputer(Choice.SCISSORS);
 
         Player[] playerArray = model.getPlayers().toArray(new Player[0]);
-        controller.onPlayerMadeChoice(playerArray[1].getName(), Choice.SCISSORS);
+        controller.onPlayerMadeChoice(playerArray[1], Choice.SCISSORS);
 
         assertNotNull(model.getResult());
         assertTrue(model.getResult().isTie());
@@ -98,5 +109,12 @@ public class GameControllerTest {
         assertNotNull(model.getResult());
         assertTrue(model.getResult().isTie());
         assertNull(model.getResult().getWinner());
+    }
+
+    @Test
+    public void testRestart() throws Exception {
+        playComputerVsComputer(Choice.SCISSORS);
+        controller.onRestart();
+        assertEquals (GameState.INITIALIZED, model.getState());
     }
 }
