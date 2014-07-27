@@ -17,7 +17,7 @@ public enum Choice {
         SCISSORS.beats(PAPER);
     }
 
-    private Set<Choice> losers;
+    private final Set<Choice> losers;
 
     private Choice() {
         losers = new HashSet<>();

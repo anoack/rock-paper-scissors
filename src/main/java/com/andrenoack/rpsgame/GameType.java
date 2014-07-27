@@ -9,8 +9,8 @@ public enum GameType {
     PLAYER_VS_COMPUTER("Player vs. Computer", new PlayerVsComputerPlayerFactory()),
     COMPUTER_VS_COMPUTER("Computer vs. Computer", new ComputerVsComputerPlayerFactory());
 
-    private String caption;
-    private PlayerFactory playerFactory;
+    private final String caption;
+    private final PlayerFactory playerFactory;
 
     GameType(String caption, PlayerFactory playerFactory) {
         this.caption = caption;

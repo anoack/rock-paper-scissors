@@ -5,8 +5,12 @@ package com.andrenoack.rpsgame.players;
  */
 public class ComputerVsComputerPlayerFactory extends BasePlayerFactory {
 
+    public ComputerVsComputerPlayerFactory() {
+        super();
+    }
+
     @Override
     public Player createPlayerTwo() {
-        return new AutoChoicePlayerDecorator(new GenericPlayer("Computer 2"), super.autoChoosingStrategy);
+        return new AutoChoicePlayerDecorator(new GenericPlayer("Computer 2"), autoChoosingStrategy);
     }
 }

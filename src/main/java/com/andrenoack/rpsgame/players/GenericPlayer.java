@@ -10,7 +10,7 @@ import java.util.Observable;
  */
 public class GenericPlayer extends Observable implements Player {
 
-    private String name;
+    private final String name;
     private Choice choice;
     private boolean playing;
 

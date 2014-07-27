@@ -7,7 +7,7 @@ import com.andrenoack.rpsgame.players.Player;
  */
 public class Result {
 
-    private Player winner;
+    private final Player winner;
 
     public Result(Player winner) {
         this.winner = winner;

@@ -5,7 +5,6 @@ import com.andrenoack.rpsgame.Choice;
 import com.andrenoack.rpsgame.players.Player;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import javax.swing.table.AbstractTableModel;
 import java.awt.*;
 import java.util.*;
@@ -16,11 +15,12 @@ import java.util.*;
  */
 class SwingView extends JFrame implements Observer {
 
-    private Controller controller;
+    private final Controller controller;
     private JPanel screens;
     private Map<String, Component> screenMap;
 
     public SwingView(Controller controller) {
+        super();
         this.controller = controller;
         controller.getModel().addObserver(this);
         setFrameProperties();

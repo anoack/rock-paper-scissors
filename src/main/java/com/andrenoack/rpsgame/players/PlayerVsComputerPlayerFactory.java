@@ -5,6 +5,10 @@ package com.andrenoack.rpsgame.players;
  */
 public class PlayerVsComputerPlayerFactory extends BasePlayerFactory {
 
+    public PlayerVsComputerPlayerFactory() {
+        super();
+    }
+
     @Override
     public Player createPlayerTwo() {
         return new GenericPlayer("You");

@@ -9,11 +9,12 @@ import java.util.Random;
  */
 public class RandomAutoChoosingStrategy implements AutoChoosingStrategy {
 
-    private Random random;
-    private Choice[] allChoices = Choice.values();
+    private final Random random;
+    private final Choice[] allChoices;
 
     public RandomAutoChoosingStrategy() {
         this.random = new Random();
+        allChoices = Choice.values();
     }
 
     @Override

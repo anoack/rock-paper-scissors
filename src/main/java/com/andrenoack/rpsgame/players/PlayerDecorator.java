@@ -10,7 +10,7 @@ import java.util.Observer;
  */
 public abstract class PlayerDecorator implements Player {
 
-    private Player decoratedPlayer;
+    private final Player decoratedPlayer;
 
     PlayerDecorator(Player decoratedPlayer) {
         this.decoratedPlayer = decoratedPlayer;

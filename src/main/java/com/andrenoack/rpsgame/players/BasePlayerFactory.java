@@ -21,4 +21,7 @@ public abstract class BasePlayerFactory implements PlayerFactory {
     public Player createPlayerOne() {
         return new AutoChoicePlayerDecorator(new GenericPlayer("Computer 1"), autoChoosingStrategy);
     }
+
+    @Override
+    public abstract Player createPlayerTwo();
 }

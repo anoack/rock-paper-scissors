@@ -6,7 +6,7 @@ package com.andrenoack.rpsgame.players;
  */
 public class AutoChoicePlayerDecorator extends PlayerDecorator {
 
-    private AutoChoosingStrategy autoChoosingStrategy;
+    private final AutoChoosingStrategy autoChoosingStrategy;
 
     public AutoChoicePlayerDecorator(Player decoratedPlayer, AutoChoosingStrategy autoChoosingStrategy) {
         super(decoratedPlayer);

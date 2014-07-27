@@ -8,7 +8,7 @@ import com.andrenoack.rpsgame.players.Player;
  */
 public class Controller {
 
-    private Model model;
+    private final Model model;
 
     public Controller() {
         model = new Model();
