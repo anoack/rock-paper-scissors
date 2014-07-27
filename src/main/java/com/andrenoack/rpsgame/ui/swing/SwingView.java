@@ -5,6 +5,7 @@ import com.andrenoack.rpsgame.Choice;
 import com.andrenoack.rpsgame.players.Player;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import javax.swing.table.AbstractTableModel;
 import java.awt.*;
 import java.util.*;
@@ -73,6 +74,22 @@ class SwingView extends JFrame implements Observer {
 
     private JPanel buildStartScreen() {
         JPanel panel = new JPanel();
+        panel.setLayout(new BorderLayout());
+        panel.add(buildStartScreenHeader(), BorderLayout.PAGE_START);
+        panel.add(buildGameTypeChoice(), BorderLayout.CENTER);
+        return panel;
+    }
+
+    private Component buildStartScreenHeader() {
+        JPanel panel = new JPanel();
+        JLabel label = new JLabel("What type of game would you like to play?");
+        label.setFont(label.getFont().deriveFont(Font.BOLD));
+        panel.add(label);
+        return panel;
+    }
+
+    private Component buildGameTypeChoice() {
+        JPanel panel = new JPanel();
         for (final GameType gameType : EnumSet.allOf(GameType.class)) {
             JButton button = addButton(panel, gameType.getCaption());
             button.addActionListener(e -> controller.onGameTypeChosen(gameType));
@@ -113,7 +130,7 @@ class SwingView extends JFrame implements Observer {
 
     private JTable createChoicesTable() {
         Player[] players = controller.getModel().getPlayers().toArray(new Player[2]);
-        String[] columnNames = {"Player", "Choice"};
+        String[] columnNames = {"Player", "Player's Choice"};
         return new JTable(new AbstractTableModel() {
             @Override
             public int getRowCount() {
