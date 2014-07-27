@@ -15,6 +15,7 @@ public class GenericPlayer extends Observable implements Player {
     private boolean playing;
 
     public GenericPlayer(String name) {
+        super();
         this.name = name;
     }
 

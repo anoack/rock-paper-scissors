@@ -65,7 +65,7 @@ public class ResultScreen extends Screen {
     private Component createWinnerAnnouncement() {
         Result result = controller.getModel().getResult();
         String winner = result.isTie() ? "Nobody (tie)" : result.getWinner().getName();
-        return (new JLabel("The winner is: " + winner));
+        return new JLabel("The winner is: " + winner);
     }
 
     private Component createPlayAgainOptions() {

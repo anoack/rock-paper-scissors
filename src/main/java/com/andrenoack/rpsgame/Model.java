@@ -15,6 +15,7 @@ public class Model extends Observable implements Observer {
     private Result result;
 
     public Model() {
+        super();
         initialize();
     }
 
