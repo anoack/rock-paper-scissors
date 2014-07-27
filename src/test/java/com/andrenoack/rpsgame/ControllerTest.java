@@ -41,6 +41,14 @@ public class ControllerTest {
     }
 
     @Test
+    public void testPlayingState() throws Exception {
+        playPlayerVsComputer(Choice.SCISSORS);
+        Player[] players = model.getPlayers().toArray(new Player[2]);
+        assertFalse(players[0].isPlaying());    // Computer is finished
+        assertTrue(players[1].isPlaying());     // Player is asked to play
+    }
+
+    @Test
     public void testModelStateInitialized() throws Exception {
         assertEquals (GameState.INITIALIZED, model.getState());
     }

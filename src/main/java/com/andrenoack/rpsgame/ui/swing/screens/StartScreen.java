@@ -30,7 +30,7 @@ public class StartScreen extends Screen {
     private Component buildGameTypeChoice() {
         JPanel panel = new JPanel();
         for (final GameType gameType : EnumSet.allOf(GameType.class)) {
-            JButton button = addButton(panel, gameType.getCaption());
+            JButton button = addButton(panel, gameType.getDisplayName());
             button.addActionListener(e -> controller.onGameTypeChosen(gameType));
         }
         return panel;

@@ -9,16 +9,16 @@ public enum GameType {
     PLAYER_VS_COMPUTER("Player vs. Computer", new PlayerVsComputerPlayerFactory()),
     COMPUTER_VS_COMPUTER("Computer vs. Computer", new ComputerVsComputerPlayerFactory());
 
-    private final String caption;
+    private final String displayName;
     private final PlayerFactory playerFactory;
 
-    GameType(String caption, PlayerFactory playerFactory) {
-        this.caption = caption;
+    GameType(String displayName, PlayerFactory playerFactory) {
+        this.displayName = displayName;
         this.playerFactory = playerFactory;
     }
 
-    public String getCaption() {
-        return caption;
+    public String getDisplayName() {
+        return displayName;
     }
 
     public PlayerFactory getPlayerFactory() {

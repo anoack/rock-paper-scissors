@@ -13,32 +13,49 @@ import static org.junit.Assert.*;
 
 public class RandomAutoChoosingStrategyTest {
 
+    private static final int CYCLES = 10000;
+    private static final int TOLERANCE_PERCENT = 80;
+
     private RandomAutoChoosingStrategy strategy;
+    private Set<Choice> allChoices;
+    private int minimumPerChoice;
+    private Map<Choice,AtomicInteger> results;
 
     @Before
     public void setUp() throws Exception {
         strategy = new RandomAutoChoosingStrategy();
+        allChoices = EnumSet.allOf(Choice.class);
+        results = new HashMap<>();
+        minimumPerChoice = CYCLES / allChoices.size() * TOLERANCE_PERCENT / 100;
+        assertThat(minimumPerChoice, greaterThan(0));
+        assertThat(minimumPerChoice, lessThan(CYCLES));
     }
 
     @Test
     public void testChoicesAreEvenlySpread() throws Exception {
-        Set<Choice> allChoices = EnumSet.allOf(Choice.class);
-        final int cyclesPerChoice = 100;
-        final int minimumExpectedCountPerChoice = 80;
-        final int totalCycles = cyclesPerChoice * allChoices.size();
+        createRepresentativeAmountOfChoices();
+        checkAllPossibleChoicesHaveBeenChosen();
+        checkAllCountsAboveThreshold();
+    }
 
-        Map<Choice,AtomicInteger> results = new HashMap<>();
-        for (int i=0; i<totalCycles; i++) {
+    private void checkAllPossibleChoicesHaveBeenChosen() {
+        assertEquals(allChoices, results.keySet());
+    }
+
+    private void checkAllCountsAboveThreshold() {
+        for (Choice choice : results.keySet()) {
+            assertThat(results.get(choice).intValue(), greaterThan(minimumPerChoice));
+        }
+    }
+
+    private void createRepresentativeAmountOfChoices() {
+        for (int i=0; i<CYCLES; i++) {
             Choice choice = strategy.choose();
             if (results.get(choice) == null) {
                 results.put(choice, new AtomicInteger());
             }
             results.get(choice).getAndIncrement();
         }
-
-        assertEquals(allChoices, results.keySet());
-        for (Choice choice : results.keySet()) {
-            assertThat(results.get(choice).intValue(), greaterThan(minimumExpectedCountPerChoice));
-        }
     }
+
 }

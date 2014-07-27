@@ -18,6 +18,7 @@ public class AutoChoicePlayerDecorator extends PlayerDecorator {
      */
     @Override
     public void play() {
+        super.play();
         super.setChoice(autoChoosingStrategy.choose());
     }
 
