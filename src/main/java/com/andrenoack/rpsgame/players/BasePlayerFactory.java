@@ -6,14 +6,15 @@ package com.andrenoack.rpsgame.players;
  */
 public abstract class BasePlayerFactory implements PlayerFactory {
 
-    AutoChoosingStrategy autoChoosingStrategy;
+    final AutoChoosingStrategy autoChoosingStrategy;
 
-    BasePlayerFactory() {
-        this.autoChoosingStrategy = new RandomAutoChoosingStrategy();
-    }
-
-    @Override
-    public void setAutoChoosingStrategy(AutoChoosingStrategy autoChoosingStrategy) {
+    /**
+     * At least one player returned by subclasses is a Computer player
+     * who needs an AutoChoosingStrategy for making his choice.
+     * @param autoChoosingStrategy the strategy to be used by newly
+     *                             created Computer Players for making a choice
+     */
+    BasePlayerFactory(AutoChoosingStrategy autoChoosingStrategy) {
         this.autoChoosingStrategy = autoChoosingStrategy;
     }
 

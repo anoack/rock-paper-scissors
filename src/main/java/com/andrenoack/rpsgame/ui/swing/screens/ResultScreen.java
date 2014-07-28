@@ -1,6 +1,7 @@
 package com.andrenoack.rpsgame.ui.swing.screens;
 
 import com.andrenoack.rpsgame.Controller;
+import com.andrenoack.rpsgame.Model;
 import com.andrenoack.rpsgame.Result;
 import com.andrenoack.rpsgame.players.Player;
 
@@ -13,8 +14,8 @@ import java.awt.*;
  */
 public class ResultScreen extends Screen {
 
-    public ResultScreen(Controller controller) {
-        super(controller);
+    public ResultScreen(Controller controller, Model model) {
+        super(controller, model);
         this.setLayout(new GridLayout(0, 1));
         this.add(createChoicesView());
         this.add(createWinnerAnnouncement());
@@ -31,7 +32,7 @@ public class ResultScreen extends Screen {
     }
 
     private JTable createChoicesTable() {
-        Player[] players = controller.getModel().getPlayers().toArray(new Player[2]);
+        Player[] players = model.getPlayers().toArray(new Player[2]);
         String[] columnNames = {"Player", "Player's Choice"};
         return new JTable(new AbstractTableModel() {
             @Override
@@ -63,7 +64,7 @@ public class ResultScreen extends Screen {
     }
 
     private Component createWinnerAnnouncement() {
-        Result result = controller.getModel().getResult();
+        Result result = model.getResult();
         String winner = result.isTie() ? "Nobody (tie)" : result.getWinner().getName();
         return new JLabel("The winner is: " + winner);
     }

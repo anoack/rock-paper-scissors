@@ -17,13 +17,15 @@ import java.util.*;
 class SwingView extends JFrame implements Observer {
 
     private final Controller controller;
+    private final Model model;
     private JPanel screens;
     private Map<String, Component> screenMap;
 
-    public SwingView(Controller controller) {
+    public SwingView(Controller controller, Model model) {
         super();
         this.controller = controller;
-        controller.getModel().addObserver(this);
+        this.model = model;
+        model.addObserver(this);
         setFrameProperties();
         initScreens();
     }
@@ -38,7 +40,7 @@ class SwingView extends JFrame implements Observer {
         screenMap = new HashMap<>();
         screens = new JPanel(new CardLayout());
         this.setContentPane(screens);
-        showScreen(new StartScreen(controller), GameState.INITIALIZED.name());
+        showScreen(new StartScreen(controller, model), GameState.INITIALIZED.name());
     }
 
     private void showScreen(Component screen, String name) {
@@ -57,13 +59,13 @@ class SwingView extends JFrame implements Observer {
             GameState state = ((GameState)o);
             switch (state) {
                 case INITIALIZED:
-                    showScreen(new StartScreen(controller), state.name());
+                    showScreen(new StartScreen(controller, model), state.name());
                     break;
                 case RUNNING:
-                    showScreen(new ChooseScreen(controller), state.name());
+                    showScreen(new ChooseScreen(controller, model), state.name());
                     break;
                 case FINISHED:
-                    showScreen(new ResultScreen(controller), state.name());
+                    showScreen(new ResultScreen(controller, model), state.name());
                     break;
             }
         }

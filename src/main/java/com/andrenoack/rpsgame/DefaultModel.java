@@ -1,6 +1,8 @@
 package com.andrenoack.rpsgame;
 
 import com.andrenoack.rpsgame.players.Player;
+import com.andrenoack.rpsgame.players.PlayerFactory;
+import com.andrenoack.rpsgame.players.PlayerFactoryRegistry;
 
 import java.util.*;
 import static com.andrenoack.rpsgame.GameState.*;
@@ -12,10 +14,12 @@ public class DefaultModel extends Observable implements Observer, Model {
 
     private GameState state;
     private Map<String, Player> players;
+    private final PlayerFactoryRegistry playerFactoryRegistry;
     private Result result;
 
-    public DefaultModel() {
+    public DefaultModel(PlayerFactoryRegistry playerFactoryRegistry) {
         super();
+        this.playerFactoryRegistry = playerFactoryRegistry;
         initialize();
     }
 
@@ -41,8 +45,9 @@ public class DefaultModel extends Observable implements Observer, Model {
 
     @Override
     public void initPlayers(GameType gameType) {
-        addPlayer(gameType.getPlayerFactory().createPlayerOne());
-        addPlayer(gameType.getPlayerFactory().createPlayerTwo());
+        PlayerFactory playerFactory = playerFactoryRegistry.get(gameType);
+        addPlayer(playerFactory.createPlayerOne());
+        addPlayer(playerFactory.createPlayerTwo());
     }
 
     private void addPlayer(Player player) {

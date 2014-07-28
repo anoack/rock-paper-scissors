@@ -2,6 +2,7 @@ package com.andrenoack.rpsgame.ui.swing.screens;
 
 import com.andrenoack.rpsgame.Controller;
 import com.andrenoack.rpsgame.GameType;
+import com.andrenoack.rpsgame.Model;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,8 +13,8 @@ import java.util.EnumSet;
  */
 public class StartScreen extends Screen {
 
-    public StartScreen(Controller controller) {
-        super(controller);
+    public StartScreen(Controller controller, Model model) {
+        super(controller, model);
         this.setLayout(new BorderLayout());
         this.add(buildHeader(), BorderLayout.PAGE_START);
         this.add(buildGameTypeChoice(), BorderLayout.CENTER);

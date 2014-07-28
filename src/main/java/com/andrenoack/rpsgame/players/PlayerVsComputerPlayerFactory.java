@@ -5,8 +5,8 @@ package com.andrenoack.rpsgame.players;
  */
 public class PlayerVsComputerPlayerFactory extends BasePlayerFactory {
 
-    public PlayerVsComputerPlayerFactory() {
-        super();
+    public PlayerVsComputerPlayerFactory(AutoChoosingStrategy autoChoosingStrategy) {
+        super(autoChoosingStrategy);
     }
 
     @Override

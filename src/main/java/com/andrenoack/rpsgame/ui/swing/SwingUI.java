@@ -1,6 +1,7 @@
 package com.andrenoack.rpsgame.ui.swing;
 
 import com.andrenoack.rpsgame.Controller;
+import com.andrenoack.rpsgame.Model;
 import com.andrenoack.rpsgame.ui.UI;
 
 /**
@@ -9,8 +10,8 @@ import com.andrenoack.rpsgame.ui.UI;
 public class SwingUI implements UI {
 
     @Override
-    public void start(Controller controller) {
-        SwingView swingView = new SwingView(controller);
+    public void start(Controller controller, Model model) {
+        SwingView swingView = new SwingView(controller, model);
         swingView.setVisible(true);
     }
 }

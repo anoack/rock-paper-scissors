@@ -36,8 +36,4 @@ public class Controller {
         model.reset();
     }
 
-    public Model getModel() {
-        return model;
-    }
-
 }
