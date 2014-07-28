@@ -30,9 +30,9 @@ public class DefaultModel extends Observable implements Observer, Model {
 
     private void setState(GameState state) {
         if (this.state != state) {
+            this.state = state;
             setChanged();
             notifyObservers(state);
-            this.state = state;
         }
     }
 

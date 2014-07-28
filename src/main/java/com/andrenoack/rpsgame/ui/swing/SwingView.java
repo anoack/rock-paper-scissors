@@ -2,9 +2,7 @@ package com.andrenoack.rpsgame.ui.swing;
 
 import com.andrenoack.rpsgame.*;
 
-import com.andrenoack.rpsgame.ui.swing.screens.ChooseScreen;
-import com.andrenoack.rpsgame.ui.swing.screens.ResultScreen;
-import com.andrenoack.rpsgame.ui.swing.screens.StartScreen;
+import com.andrenoack.rpsgame.ui.swing.screens.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,15 +14,24 @@ import java.util.*;
  */
 class SwingView extends JFrame implements Observer {
 
+    private interface ScreenFactory {
+        public Screen createScreen(Controller controller, Model model);
+    }
+
     private final Controller controller;
     private final Model model;
-    private JPanel screens;
-    private Map<String, Component> screenMap;
+    private final JPanel screens;
+    private final Map<GameState, Component> screenMap;
+    private final Map<GameState, ScreenFactory> screenFactoryRegistry;
 
     public SwingView(Controller controller, Model model) {
         super();
         this.controller = controller;
         this.model = model;
+        screens = new JPanel(new CardLayout());
+        screenMap = new HashMap<>(3);
+        screenFactoryRegistry = new HashMap<>(3);
+
         model.addObserver(this);
         setFrameProperties();
         initScreens();
@@ -37,37 +44,29 @@ class SwingView extends JFrame implements Observer {
     }
 
     private void initScreens() {
-        screenMap = new HashMap<>();
-        screens = new JPanel(new CardLayout());
         this.setContentPane(screens);
-        showScreen(new StartScreen(controller, model), GameState.INITIALIZED.name());
+        screenFactoryRegistry.put(GameState.INITIALIZED, StartScreen::new);
+        screenFactoryRegistry.put(GameState.RUNNING, ChooseScreen::new);
+        screenFactoryRegistry.put(GameState.FINISHED, ResultScreen::new);
+        showScreen();
     }
 
-    private void showScreen(Component screen, String name) {
-        Component previous = screenMap.put(name, screen);
+    private void showScreen() {
+        GameState gameState = model.getState();
+        Screen screen = screenFactoryRegistry.get(gameState).createScreen(controller, model);
+        Component previous = screenMap.put(gameState, screen);
         if (previous != null) {
             screens.remove(previous);
         }
-        screens.add(screen, name);
+        screens.add(screen, gameState.name());
         CardLayout cl = (CardLayout)(screens.getLayout());
-        cl.show(screens, name);
+        cl.show(screens, gameState.name());
     }
 
     @Override
     public void update(Observable observable, Object o) {
         if (o instanceof GameState) {
-            GameState state = ((GameState)o);
-            switch (state) {
-                case INITIALIZED:
-                    showScreen(new StartScreen(controller, model), state.name());
-                    break;
-                case RUNNING:
-                    showScreen(new ChooseScreen(controller, model), state.name());
-                    break;
-                case FINISHED:
-                    showScreen(new ResultScreen(controller, model), state.name());
-                    break;
-            }
+            showScreen();
         }
     }
 

@@ -9,7 +9,7 @@ import java.awt.*;
 /**
  * Base class for Swing based GUI screens.
  */
-abstract class Screen extends JPanel {
+public abstract class Screen extends JPanel {
 
     final Controller controller;
     final Model model;
