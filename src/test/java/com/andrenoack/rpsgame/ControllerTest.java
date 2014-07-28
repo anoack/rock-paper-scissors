@@ -18,10 +18,9 @@ public class ControllerTest {
         fakeAutoChoose = new PredefinedChoiceAutoChoosingStrategy();
         GameType.COMPUTER_VS_COMPUTER.getPlayerFactory().setAutoChoosingStrategy(fakeAutoChoose);
         GameType.PLAYER_VS_COMPUTER.getPlayerFactory().setAutoChoosingStrategy(fakeAutoChoose);
-        controller = new Controller();
-        model = controller.getModel();
+        model = new DefaultModel();
+        controller = new Controller(model);
     }
-
 
     private void playPlayerVsComputer(Choice forAutoChoose) {
         fakeAutoChoose.setChoice(forAutoChoose);

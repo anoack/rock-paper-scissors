@@ -2,141 +2,54 @@ package com.andrenoack.rpsgame;
 
 import com.andrenoack.rpsgame.players.Player;
 
-import java.util.*;
-import static com.andrenoack.rpsgame.GameState.*;
+import java.util.Collection;
+import java.util.Observer;
 
 /**
  * Contains the game data as well as logic to manipulate the game data.
  */
-public class Model extends Observable implements Observer {
-
-    private GameState state;
-    private Map<String, Player> players;
-    private Result result;
-
-    public Model() {
-        super();
-        initialize();
-    }
-
-    private void initialize() {
-        players = new LinkedHashMap<>(2);
-        setState(INITIALIZED);
-    }
-
-    private void setState(GameState state) {
-        if (this.state != state) {
-            setChanged();
-            notifyObservers(state);
-            this.state = state;
-        }
-    }
+public interface Model {
 
     /**
      * Clears the model data.
      */
-    public void reset() {
-        result = null;
-        players = null;
-        initialize();
-    }
+    void reset();
 
     /**
      * Creates two opponent players. The type of players is determined by
      * the GameType.
      */
-    public void initPlayers(GameType gameType) {
-        addPlayer(gameType.getPlayerFactory().createPlayerOne());
-        addPlayer(gameType.getPlayerFactory().createPlayerTwo());
-    }
-
-    private void addPlayer(Player player) {
-        players.put(player.getName(), player);
-        player.addObserver(this);
-    }
+    void initPlayers(GameType gameType);
 
     /**
      * Ask the players to make their choice.
      */
-    public void startGame() {
-        for (Player player : getPlayers()) {
-            player.play();
-        }
-        if (state == INITIALIZED) {
-            setState(RUNNING);
-        }
-    }
-
-    public void setPlayersChoice(Player player, Choice choice) {
-        player.setChoice(choice);
-    }
+    void startGame();
 
     /**
-     * The model subscribes to the events when a player has made a choice.
-     * This method is the implementation of the Observer interface.
-     * @see java.util.Observable
+     * To be called when a player has made a choice.
+     * @param player hte player who made a choice
+     * @param choice the choice that has been made
      */
-    @Override
-    public void update(Observable observable, Object o) {
-        if (isChoicesComplete()) {
-            calculateResult();
-        }
-    }
+    void setPlayersChoice(Player player, Choice choice);
 
     /**
-     * Checks if both Players are finished with making their choice.
-     * @return true if both players are finished, false otherwise
+     * When both players have made their choice, this method returns the result.
+     * @return the result or null if any of the players is not yet finished
      */
-    boolean isChoicesComplete() {
-        for (Player player : players.values()) {
-            if(!player.isChoiceMade()) {
-                return false;
-            }
-        }
-        return !players.isEmpty();
-    }
+    Result getResult();
 
     /**
-     * Compute the result, i.e. which Player wins the game after both Players
-     * have made their choice.
+     * Returns a Collection view of the players.
+     * @return a Collection containing both players
      */
-    void calculateResult() {
-        if (isChoicesComplete()) {
-            Player[] playerArray = getPlayers().toArray(new Player[2]);
-            switch (compareChoices(playerArray[0].getChoice(), playerArray[1].getChoice())) {
-                case 1:
-                    result = new Result(playerArray[0]);
-                    break;
-                case -1:
-                    result = new Result(playerArray[1]);
-                    break;
-                default:
-                    result = new Result(null);
-            }
-        }
-        setState(FINISHED);
-    }
+    Collection<Player> getPlayers();
 
-    private int compareChoices (Choice one, Choice two) {
-        if (one.isBeating(two)) {
-            return 1;
-        }
-        if (two.isBeating(one)) {
-            return -1;
-        }
-        return 0;
-    }
+    GameState getState();
 
-    public Result getResult() {
-        return result;
-    }
-
-    public Collection<Player> getPlayers() {
-        return players.values();
-    }
-
-    public GameState getState() {
-        return state;
-    }
-
+    /**
+     * Add an Observer to be notified about changes of this Model.
+     * @param o the Observer to be added
+     */
+    public void addObserver(Observer o);
 }

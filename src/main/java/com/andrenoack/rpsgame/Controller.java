@@ -10,8 +10,8 @@ public class Controller {
 
     private final Model model;
 
-    public Controller() {
-        model = new Model();
+    public Controller(Model model) {
+        this.model = model;
     }
 
     /**

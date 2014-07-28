@@ -10,8 +10,10 @@ import com.andrenoack.rpsgame.ui.swing.SwingUIFactory;
 class Game {
 
     public static void main(String... args) {
+        Model model = new DefaultModel();
+        Controller controller = new Controller(model);
         UIFactory uiFactory = new SwingUIFactory();
         UI ui = uiFactory.createUI();
-        ui.start(new Controller());
+        ui.start(controller);
     }
 }
